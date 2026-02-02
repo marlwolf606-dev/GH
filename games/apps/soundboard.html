@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Soundboard</title>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Knewave&display=swap');
+            
+            body{
+                background-color: black;
+                color: white;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .container{
+    position: absolute;
+    width:100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.bubbles{
+    position: fixed;
+    display: flex;
+}
+
+.bubbles span{
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background: #fefefe;
+    margin: 0 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px #ffffff44,
+    0 0 50px #fefefe,
+    0 0 100px #fefefe;
+    animation: animate 15s linear infinite;
+    animation-duration: calc(750s / var(--i));
+}
+
+.bubbles span:nth-child(even){
+    background: #fefefe;
+    box-shadow: 0 0 0 10px #fefefe44,
+    0 0 100px #fefefe,
+    0 0 100px #fefefe;
+}
+
+@keyframes animate {
+    0%
+    {transform: translateY(100vh) scale(0);}
+
+    100%
+    {
+        transform: translateY(-10vh) scale(1);
+    }
+}
+
+.titlediv{
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 305px;
+    height: 50px;
+    position: fixed;
+    left: 40%;
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
+    z-index: 11;
+}
+
+.titletext{
+    position: relative;
+    left: 9px;
+    top: -33px;
+    font-size: 47px;
+}
+
+
+            .sounds button {
+                
+                background: rgba(0, 0, 0, 0.35);
+                color: white;
+                border: 2px solid #fff;
+                border-radius: 20px;
+                padding: 10px 14px;
+                margin: 6px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: 0.25s;
+                backdrop-filter: blur(10px);
+                z-index: -1;
+                margin: 15px;
+                position: relative;
+                top:50px
+            }
+
+            .sounds button:hover {
+                background: rgba(255, 255, 255, 0.35);
+            }
+
+            /* Stop button */
+        #stopAll {
+            background: rgba(255, 0, 0, 0.5);
+            color: white;
+            font-weight: bold;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 10px 14px;
+            margin: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            position: fixed;
+            top: 7px;
+            left: 650px;
+            z-index: 10;
+            
+        }
+
+        #stopAll:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="bubbles">
+                <span style="--i:73; left: 0vh;"></span>
+<span style="--i:118; left: 2vh;"></span>
+<span style="--i:41; left: 4vh;"></span>
+<span style="--i:96; left: 6vh;"></span>
+<span style="--i:22; left: 8vh;"></span>
+<span style="--i:87; left: 10vh;"></span>
+<span style="--i:54; left: 12vh;"></span>
+<span style="--i:109; left: 14vh;"></span>
+<span style="--i:65; left: 16vh;"></span>
+<span style="--i:31; left: 18vh;"></span>
+
+<span style="--i:120; left: 20vh;"></span>
+<span style="--i:48; left: 22vh;"></span>
+<span style="--i:92; left: 24vh;"></span>
+<span style="--i:15; left: 26vh;"></span>
+<span style="--i:76; left: 28vh;"></span>
+<span style="--i:103; left: 30vh;"></span>
+<span style="--i:59; left: 32vh;"></span>
+<span style="--i:84; left: 34vh;"></span>
+<span style="--i:27; left: 36vh;"></span>
+<span style="--i:111; left: 38vh;"></span>
+
+<span style="--i:68; left: 40vh;"></span>
+<span style="--i:35; left: 42vh;"></span>
+<span style="--i:97; left: 44vh;"></span>
+<span style="--i:19; left: 46vh;"></span>
+<span style="--i:88; left: 48vh;"></span>
+<span style="--i:52; left: 50vh;"></span>
+<span style="--i:115; left: 52vh;"></span>
+<span style="--i:63; left: 54vh;"></span>
+<span style="--i:29; left: 56vh;"></span>
+<span style="--i:101; left: 58vh;"></span>
+
+<span style="--i:74; left: 60vh;"></span>
+<span style="--i:44; left: 62vh;"></span>
+<span style="--i:93; left: 64vh;"></span>
+<span style="--i:17; left: 66vh;"></span>
+<span style="--i:81; left: 68vh;"></span>
+<span style="--i:56; left: 70vh;"></span>
+<span style="--i:107; left: 72vh;"></span>
+<span style="--i:66; left: 74vh;"></span>
+<span style="--i:24; left: 76vh;"></span>
+<span style="--i:112; left: 78vh;"></span>
+
+<span style="--i:71; left: 80vh;"></span>
+<span style="--i:39; left: 82vh;"></span>
+<span style="--i:98; left: 84vh;"></span>
+<span style="--i:13; left: 86vh;"></span>
+<span style="--i:90; left: 88vh;"></span>
+<span style="--i:58; left: 90vh;"></span>
+<span style="--i:119; left: 92vh;"></span>
+<span style="--i:62; left: 94vh;"></span>
+<span style="--i:26; left: 96vh;"></span>
+<span style="--i:105; left: 98vh;"></span>
+
+<span style="--i:79; left: 100vh;"></span>
+<span style="--i:46; left: 102vh;"></span>
+<span style="--i:94; left: 104vh;"></span>
+<span style="--i:18; left: 106vh;"></span>
+<span style="--i:83; left: 108vh;"></span>
+<span style="--i:53; left: 110vh;"></span>
+<span style="--i:110; left: 112vh;"></span>
+<span style="--i:69; left: 114vh;"></span>
+<span style="--i:28; left: 116vh;"></span>
+<span style="--i:117; left: 118vh;"></span>
+
+<span style="--i:75; left: 120vh;"></span>
+<span style="--i:42; left: 122vh;"></span>
+<span style="--i:95; left: 124vh;"></span>
+<span style="--i:14; left: 126vh;"></span>
+<span style="--i:85; left: 128vh;"></span>
+<span style="--i:57; left: 130vh;"></span>
+<span style="--i:108; left: 132vh;"></span>
+<span style="--i:64; left: 134vh;"></span>
+<span style="--i:25; left: 136vh;"></span>
+<span style="--i:113; left: 138vh;"></span>
+
+<span style="--i:82; left: 140vh;"></span>
+<span style="--i:37; left: 142vh;"></span>
+<span style="--i:99; left: 144vh;"></span>
+<span style="--i:16; left: 146vh;"></span>
+<span style="--i:91; left: 148vh;"></span>
+<span style="--i:55; left: 150vh;"></span>
+<span style="--i:116; left: 152vh;"></span>
+<span style="--i:68; left: 154vh;"></span>
+<span style="--i:23; left: 156vh;"></span>
+<span style="--i:107; left: 158vh;"></span>
+
+<span style="--i:74; left: 160vh;"></span>
+<span style="--i:45; left: 162vh;"></span>
+<span style="--i:88; left: 164vh;"></span>
+<span style="--i:12; left: 166vh;"></span>
+<span style="--i:101; left: 168vh;"></span>
+<span style="--i:60; left: 170vh;"></span>
+<span style="--i:119; left: 172vh;"></span>
+<span style="--i:66; left: 174vh;"></span>
+<span style="--i:29; left: 176vh;"></span>
+<span style="--i:93; left: 178vh;"></span>
+<span style="--i:91; left: 180vh;"></span>
+<span style="--i:83; left: 182vh;"></span>
+<span style="--i:35; left: 184vh;"></span>
+<span style="--i:49; left: 186vh;"></span>
+<span style="--i:62; left: 188vh;"></span>
+<span style="--i:34; left: 190vh;"></span>
+<span style="--i:25; left: 192vh;"></span>
+<span style="--i:69; left: 194vh;"></span>
+<span style="--i:34; left: 196vh;"></span>
+<span style="--i:25; left: 198vh;"></span>
+
+
+            </div>
+        </div>
+        <div class="titlediv">
+            <h1 class="titletext">Soundboard</h1>
+        </div>
+
+        <div class="sounds"></div>
+         <script>
+        const repoOwner = "marlwolf606-dev";
+        const repoName  = "soundboard";
+        const soundsPath = "media/sounds";
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${soundsPath}`;
+
+        const currentlyPlaying = []; // Array to track all playing audio
+
+        async function loadSounds() {
+            try {
+                const res = await fetch(apiUrl);
+                if (!res.ok) throw new Error("Failed to fetch sounds list");
+
+                const files = await res.json();
+
+                const soundFiles = files.filter(file =>
+                    file.name.match(/\.(mp3|wav|ogg|m4a)$/i)
+                );
+
+                const soundsDiv = document.querySelector(".sounds");
+
+                // Create Stop All button
+                const stopBtn = document.createElement("button");
+                stopBtn.id = "stopAll";
+                stopBtn.textContent = "Stop All";
+                stopBtn.addEventListener("click", () => {
+                    currentlyPlaying.forEach(audio => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    });
+                    currentlyPlaying.length = 0; // clear array
+                });
+                soundsDiv.appendChild(stopBtn);
+
+                // Create buttons for each sound
+                soundFiles.forEach(file => {
+                    const soundUrl = file.download_url;
+                    const label = file.name.replace(/\.(mp3|wav|ogg|m4a)$/i, "");
+
+                    const btn = document.createElement("button");
+                    btn.textContent = label;
+
+                    const audio = new Audio(soundUrl);
+
+                    btn.addEventListener("click", () => {
+                        audio.currentTime = 0;
+                        audio.play();
+                        currentlyPlaying.push(audio);
+
+                        // Remove audio from array when it ends
+                        audio.addEventListener("ended", () => {
+                            const index = currentlyPlaying.indexOf(audio);
+                            if (index > -1) currentlyPlaying.splice(index, 1);
+                        });
+                    });
+
+                    soundsDiv.appendChild(btn);
+                });
+
+            } catch (err) {
+                console.error("Error loading sounds:", err);
+            }
+        }
+
+        loadSounds();
+    </script>
+    </body>
+</html>
