@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<!-- Ultimate Game Stash file--> 
+<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
+
+<html lang="en"> 
+<head>
+  <meta charset="utf-8">
+
+  <!-- ✅ CONVERTED BASE -->
+  <base href="https://raw.githubusercontent.com/marlwolf606-dev/GH/main/games/minesweeper-plus-2.1/">
+
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+  <title>MinesweeperPlus</title>
+
+  <style>
+    html, body, #canvas { margin:0; padding:0; border:0; }
+    body { color:white; background:black; overflow:hidden; touch-action:none; }
+    #canvas { display:block; }
+    #canvas:focus { outline:none; }
+    #status, #status-splash, #status-progress { position:absolute; left:0; right:0; }
+    #status, #status-splash { top:0; bottom:0; }
+    #status {
+      background:#242424;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      visibility:hidden;
+    }
+  </style>
+
+  <link rel="icon" type="image/png" href="MinesweeperPlus.icon.png">
+  <link rel="apple-touch-icon" href="MinesweeperPlus.apple-touch-icon.png">
+</head>
+
+<body>
+  <canvas id="canvas">Your browser does not support the canvas tag.</canvas>
+
+  <noscript>Your browser does not support JavaScript.</noscript>
+
+  <div id="status">
+    <img id="status-splash" src="MinesweeperPlus.png">
+    <progress id="status-progress"></progress>
+    <div id="status-notice"></div>
+  </div>
+
+  <!-- These now resolve via the RAW base -->
+  <script src="MinesweeperPlus.js"></script>
+  <script src="merge.js"></script>
+
+  <!-- Godot loader script unchanged -->
+  <script>
+    const GODOT_CONFIG = {
+      args:[],
+      canvasResizePolicy:2,
+      ensureCrossOriginIsolationHeaders:true,
+      executable:"MinesweeperPlus",
+      experimentalVK:false,
+      fileSizes:{
+        "MinesweeperPlus.pck":48031232,
+        "MinesweeperPlus.wasm":52106500
+      },
+      focusCanvas:true,
+      gdextensionLibs:[]
+    };
+
+    const GODOT_THREADS_ENABLED = false;
+    const engine = new Engine(GODOT_CONFIG);
+    engine.startGame();
+  </script>
+</body>
+</html>
