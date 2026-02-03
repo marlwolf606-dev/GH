@@ -1,113 +1,37 @@
 <!DOCTYPE html>
-
-<!-- Ultimate Game Stash file --> 
-<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
 
-  <!-- ✅ Updated base to GitHub Raw -->
+  <!-- ✅ Base for relative paths -->
   <base href="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/">
 
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
   <title>MinesweeperPlus</title>
 
   <style>
-html, body, #canvas {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
-
-body {
-	color: white;
-	background-color: black;
-	overflow: hidden;
-	touch-action: none;
-}
-
-#canvas {
-	display: block;
-}
-
-#canvas:focus {
-	outline: none;
-}
-
-#status, #status-splash, #status-progress {
-	position: absolute;
-	left: 0;
-	right: 0;
-}
-
-#status, #status-splash {
-	top: 0;
-	bottom: 0;
-}
-
-#status {
-	background-color: #242424;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	visibility: hidden;
-}
-
-#status-splash {
-	max-height: 100%;
-	max-width: 100%;
-	margin: auto;
-}
-
-#status-splash.show-image--false {
-	display: none;
-}
-
-#status-splash.fullsize--true {
-	height: 100%;
-	width: 100%;
-	object-fit: contain;
-}
-
-#status-splash.use-filter--false {
-	image-rendering: pixelated;
-}
-
-#status-progress, #status-notice {
-	display: none;
-}
-
-#status-progress {
-	bottom: 10%;
-	width: 50%;
-	margin: 0 auto;
-}
-
-#status-notice {
-	background-color: #5b3943;
-	border-radius: 0.5rem;
-	border: 1px solid #9b3943;
-	color: #e0e0e0;
-	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
-	line-height: 1.3;
-	margin: 0 2rem;
-	overflow: hidden;
-	padding: 1rem;
-	text-align: center;
-	z-index: 1;
-}
+html, body, #canvas { margin: 0; padding: 0; border: 0; }
+body { color: white; background-color: black; overflow: hidden; touch-action: none; }
+#canvas { display: block; }
+#canvas:focus { outline: none; }
+#status, #status-splash, #status-progress { position: absolute; left: 0; right: 0; }
+#status, #status-splash { top: 0; bottom: 0; }
+#status { background-color: #242424; display: flex; flex-direction: column; justify-content: center; align-items: center; visibility: hidden; }
+#status-splash { max-height: 100%; max-width: 100%; margin: auto; }
+#status-splash.show-image--false { display: none; }
+#status-splash.fullsize--true { height: 100%; width: 100%; object-fit: contain; }
+#status-splash.use-filter--false { image-rendering: pixelated; }
+#status-progress, #status-notice { display: none; }
+#status-progress { bottom: 10%; width: 50%; margin: 0 auto; }
+#status-notice { background-color: #5b3943; border-radius: 0.5rem; border: 1px solid #9b3943; color: #e0e0e0; font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif; line-height: 1.3; margin: 0 2rem; overflow: hidden; padding: 1rem; text-align: center; z-index: 1; }
   </style>
 
-  <!-- ✅ Icons via GitHub Raw -->
+  <!-- Icons -->
   <link id="-gd-engine-icon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/MinesweeperPlus.icon.png" />
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/MinesweeperPlus.apple-touch-icon.png"/>
 </head>
-
 <body>
   <canvas id="canvas">Your browser does not support the canvas tag.</canvas>
-
   <noscript>Your browser does not support JavaScript.</noscript>
 
   <div id="status">
@@ -116,76 +40,74 @@ body {
     <div id="status-notice"></div>
   </div>
 
-  <!-- ✅ Load Godot files via GitHub Raw -->
-  <script src="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/MinesweeperPlus.js"></script>
+  <!-- Engine Scripts -->
   <script src="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/merge.js"></script>
+  <script src="https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/MinesweeperPlus.js"></script>
 
   <script>
-const GODOT_CONFIG = {
-  args: [],
-  canvasResizePolicy: 2,
-  ensureCrossOriginIsolationHeaders: true,
-  executable: "MinesweeperPlus",
-  experimentalVK: false,
-  fileSizes: {
-    "MinesweeperPlus.pck": 48031232,
-    "MinesweeperPlus.wasm": 52106500
-  },
-  focusCanvas: true,
-  gdextensionLibs: []
-};
-
 const GODOT_THREADS_ENABLED = false;
 
-// ✅ Engine is available via merge.js (no jsDelivr needed)
-const engine = new Engine(GODOT_CONFIG);
+// Helper: fetch a GitHub Raw file as ArrayBuffer
+async function fetchGitHubRaw(file) {
+  const url = `https://raw.githubusercontent.com/bubbls/ports/main/minesweeper-plus-2.1/${file}`;
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Failed to load ${file}: ${resp.status}`);
+  return await resp.arrayBuffer();
+}
 
-(function () {
+(async () => {
   const statusOverlay = document.getElementById('status');
   const statusProgress = document.getElementById('status-progress');
   const statusNotice = document.getElementById('status-notice');
 
-  let initializing = true;
-  let statusMode = '';
-
   function setStatusMode(mode) {
-    if (statusMode === mode || !initializing) return;
-    if (mode === 'hidden') {
-      statusOverlay.remove();
-      initializing = false;
-      return;
-    }
+    if (mode === 'hidden') { statusOverlay.remove(); return; }
     statusOverlay.style.visibility = 'visible';
     statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
     statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
-    statusMode = mode;
   }
 
   function setStatusNotice(text) {
-    while (statusNotice.lastChild) statusNotice.removeChild(statusNotice.lastChild);
-    const lines = text.split('\n');
-    lines.forEach((line) => {
-      statusNotice.appendChild(document.createTextNode(line));
-      statusNotice.appendChild(document.createElement('br'));
-    });
+    statusNotice.innerHTML = text.replace(/\n/g,'<br>');
   }
 
   function displayFailureNotice(err) {
     console.error(err);
-    if (err instanceof Error) setStatusNotice(err.message);
-    else if (typeof err === 'string') setStatusNotice(err);
-    else setStatusNotice('An unknown error occurred.');
+    setStatusNotice(err.message || err.toString() || 'Unknown error');
     setStatusMode('notice');
-    initializing = false;
   }
 
-  const missing = Engine.getMissingFeatures({ threads: GODOT_THREADS_ENABLED });
-
-  if (missing.length !== 0) {
-    const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
-    displayFailureNotice(missingMsg + missing.join('\n'));
-  } else {
+  try {
     setStatusMode('progress');
+    
+    // Fetch files from GitHub
+    const [pckBuffer, wasmBuffer] = await Promise.all([
+      fetchGitHubRaw("MinesweeperPlus.pck"),
+      fetchGitHubRaw("MinesweeperPlus.wasm")
+    ]);
+
+    const GODOT_CONFIG = {
+      args: [],
+      canvasResizePolicy: 2,
+      ensureCrossOriginIsolationHeaders: true,
+      executable: "MinesweeperPlus",
+      experimentalVK: false,
+      fileSizes: {
+        "MinesweeperPlus.pck": pckBuffer.byteLength,
+        "MinesweeperPlus.wasm": wasmBuffer.byteLength
+      },
+      focusCanvas: true,
+      gdextensionLibs: [],
+      // Use Blobs instead of URLs for GitHub Raw
+      files: {
+        "MinesweeperPlus.pck": new Uint8Array(pckBuffer),
+        "MinesweeperPlus.wasm": new Uint8Array(wasmBuffer)
+      }
+    };
+
+    // Initialize engine
+    const engine = new Engine(GODOT_CONFIG);
+
     engine.startGame({
       onProgress: function (current, total) {
         if (current > 0 && total > 0) {
@@ -197,8 +119,12 @@ const engine = new Engine(GODOT_CONFIG);
         }
       }
     }).then(() => setStatusMode('hidden'), displayFailureNotice);
+
+  } catch(err) {
+    displayFailureNotice(err);
   }
-}());
+
+})();
   </script>
 </body>
 </html>
